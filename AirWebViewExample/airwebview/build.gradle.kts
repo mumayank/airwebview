@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.jetbrains.kotlin.android)
+    id("maven-publish") // Plugin to enable publishing to Maven
 }
 
 android {
@@ -42,6 +43,11 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    publishing {
+        singleVariant("release") {
+            withSourcesJar()
+        }
+    }
 }
 
 dependencies {
@@ -68,5 +74,28 @@ dependencies {
 
     configurations.all {
         exclude(group = "com.android.support")
+    }
+}
+
+group = "com.github.mumayank" // Your GitHub username (JitPack uses this as the Maven group ID)
+version = "0.1" // The version you wish to publish
+
+// Task to package source files (Optional but recommended for library)
+val sourcesJar by tasks.creating(Jar::class) {
+    from(android.sourceSets["main"].java.srcDirs)
+    archiveClassifier.set("sources")
+}
+
+// Publishing configuration for JitPack
+publishing {
+    publications {
+        // Defines Maven publication for the library
+        create<MavenPublication>("mavenJava") {
+            groupId = "com.github.mumayank" // Your GitHub username
+            artifactId = "airwebview" // Name of your library
+            version = "0.1" // Version of the library
+            // Attach source code jar (Optional but good practice)
+            artifact(sourcesJar)
+        }
     }
 }
