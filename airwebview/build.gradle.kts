@@ -77,7 +77,6 @@ publishing {
         register<MavenPublication>("release") {
             groupId = "com.github.mumayank"
             artifactId = "airwebview"
-            version = "0.1.2"
 
             afterEvaluate {
                 from(components["release"])
