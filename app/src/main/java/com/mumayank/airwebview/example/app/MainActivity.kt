@@ -3,11 +3,9 @@ package com.mumayank.airwebview.example.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
@@ -21,12 +19,13 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         viewModel.loadUrl(this, "https://google.com/")
         setContent {
             val mainStatus by viewModel.mainStatus.observeAsState()
             AirWebViewExampleTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                Column(
+                    Modifier.fillMaxSize()
+                ) {
                     when (mainStatus) {
                         MainStatus.Error -> {
                             // do something
@@ -35,8 +34,7 @@ class MainActivity : ComponentActivity() {
                         is MainStatus.PdfFile -> {
                             AirWebViewPdf(
                                 Modifier
-                                    .fillMaxSize()
-                                    .padding(innerPadding),
+                                    .fillMaxSize(),
                                 (mainStatus as MainStatus.PdfFile).file,
                                 onLoaded = {
                                     // do something
@@ -50,8 +48,7 @@ class MainActivity : ComponentActivity() {
                         is MainStatus.WebsiteUrl -> {
                             AirWebViewWebsite(
                                 Modifier
-                                    .fillMaxSize()
-                                    .padding(innerPadding),
+                                    .fillMaxSize(),
                                 (mainStatus as MainStatus.WebsiteUrl).url,
                                 onLoaded = {
                                     // do something

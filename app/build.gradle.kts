@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.mumayank.airwebview.example.app"
-    compileSdk = 34
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.mumayank.airwebview.example.app"
