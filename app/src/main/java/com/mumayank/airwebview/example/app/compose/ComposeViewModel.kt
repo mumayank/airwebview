@@ -1,4 +1,4 @@
-package com.mumayank.airwebview.example.app
+package com.mumayank.airwebview.example.app.compose
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.mumayank.airwebview.helpers.AirWebViewHelper
 
-class MainViewModel : ViewModel() {
+class ComposeViewModel : ViewModel() {
 
-    private val _mainStatus = MutableLiveData<MainStatus>()
-    val mainStatus: LiveData<MainStatus> = _mainStatus
+    private val _composeStatus = MutableLiveData<ComposeStatus>()
+    val composeStatus: LiveData<ComposeStatus> = _composeStatus
 
     fun loadUrl(
         context: Context,
@@ -21,13 +21,13 @@ class MainViewModel : ViewModel() {
             viewModelScope,
             url,
             onWebsiteUrl = {
-                _mainStatus.postValue(MainStatus.WebsiteUrl(it))
+                _composeStatus.postValue(ComposeStatus.WebsiteUrl(it))
             },
             onPdfFile = {
-                _mainStatus.postValue(MainStatus.PdfFile(it))
+                _composeStatus.postValue(ComposeStatus.PdfFile(it))
             },
             onError = {
-                _mainStatus.postValue(MainStatus.Error)
+                _composeStatus.postValue(ComposeStatus.Error)
             }
         )
     }

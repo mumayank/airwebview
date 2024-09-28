@@ -1,4 +1,4 @@
-package com.mumayank.airwebview.example.app.ui.theme
+package com.mumayank.airwebview.example.app.compose.ui.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme

@@ -1,5 +1,6 @@
 package com.mumayank.airwebview.helpers
 
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
@@ -18,6 +19,7 @@ object UrlHelper {
                 val redirectedUrl = connection.getHeaderField(HEADER_FIELD_LOCATION)
                 redirectedUrl ?: initUrl
             } catch (e: Exception) {
+                Log.e("", e.toString())
                 null
             }
         }
