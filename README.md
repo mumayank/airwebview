@@ -71,13 +71,13 @@ Latest version:
 
 ```kotlin
 AirWebView(
-    modifier,
+    Modifier.fillMaxSize(),
     url,
-    onProgress = { isVisible ->
-        // Use isVisible to change progress
+    onProgressChange = {
+        // Use 'it' to handle progress change
     },
     onError = {
-        // Handle erorr here
+        // Handle error scenario
     }
 )
 ```
@@ -99,15 +99,15 @@ fragment:
 
 ```kotlin
 // Show progress here
-binding.airWebView.load(
+airWebView.load(
     context,
     viewModelScope,
     url,
-    onLoaded = {
-        // Hide progress here
+    onProgressChange = {
+        // Use 'it' to handle progress change
     },
     onError = {
-        // Handle error here
+        // Handle error scenario
     }
 )
 ```
