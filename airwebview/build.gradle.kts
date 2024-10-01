@@ -64,8 +64,8 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
-    implementation(libs.pdfium.android)
-    implementation(libs.androidpdfviewer)
+    api(libs.pdfium.android)
+    api(libs.androidpdfviewer)
 
     configurations.all {
         exclude(group = "com.android.support")

@@ -1,40 +1,33 @@
-<img src="./assets/logo.png" alt="Alt text" width="800"/>
+<img src="./assets/logo.png" alt="Alt text" width="500"/>
 
 # AirWebView
 
 [![](https://jitpack.io/v/mumayank/airwebview.svg)](https://jitpack.io/#mumayank/airwebview)
 
-This library helps render/ load a website or PDF from a URL within the app.
+A wrapper that provides a `composable` (and a `view`) to load a website or a `PDF` from a `URL`.
 
-Example: To show terms and conditions to the user.
+It uses `Android`'s standard [WebView](https://developer.android.com/reference/android/webkit/WebView) to load websites.
 
-___
+And [AndroidPdfViewer](https://github.com/DImuthuUpe/AndroidPdfViewer) library to load `PDF`s.
+
+# Key difference:
+
+- The key difference is in the way a `PDF` is rendered
+- Almost all other libraries render `PDF` pages as images, making the `URL`s or links within the `PDF` unclickable.
+- This wrapper uses [AndroidPdfViewer](https://github.com/DImuthuUpe/AndroidPdfViewer) which keeps `PDF` links clickable.
+- Before rendering, the `PDF` is downloaded from the `URL` in cache memory behind the scene.
 
 ## Demo
 
-[Watch the demo YouTube video](https://youtu.be/rmAG69zXjPI)
+[Watch the demo YouTube video](https://youtu.be/RugCPfDioWk)
 
----
+## Possible downsides
 
-## Features
-
-- You just have to supply your URL to the library. It takes care of:
-    - If the URL is a redirection URL, it internally traverses to the final URL
-    - If the final URL is:
-        - a website, it loads it in Android's WebView
-        - a PDF:
-            - it downloads the PDF in cache memory
-            - and loads it in PDFView from [AndroidPdfViewer](https://github.com/DImuthuUpe/AndroidPdfViewer) library, which uses Google-AOSP's [PDFium](https://android.googlesource.com/platform/external/pdfium/) library internally.
-    - progress and error callbacks are provided
-    - uses coroutines
-    - Compose and View both supported
-    - minSdk = 21, compileSdk = 33
-
-___
+Including the library in your app can increase the `APK` size significantly (~16MB). If you use split `APK` or `aab` (which are anyway the default for a few years now), then the issue is already mitigated. [source](https://github.com/DImuthuUpe/AndroidPdfViewer)
 
 ## Usage
 
-Project-level build.gradle:
+Project-level `build.gradle`:
 
 ```gradle
 allprojects {
@@ -46,7 +39,7 @@ allprojects {
 }
 ```
 
-app-level build.gralde:
+app-level `build.gralde`:
 
 ```gradle
 dependencies {
@@ -54,7 +47,7 @@ dependencies {
 }
 ```
 
-project-level gradle.properties:
+project-level `gradle.properties`:
 
 ```gradle
 android.useAndroidX=true
@@ -64,8 +57,6 @@ android.enableJetifier=true
 Latest version:
 
 [![](https://jitpack.io/v/mumayank/airwebview.svg)](https://jitpack.io/#mumayank/airwebview)
-
----
 
 ### Compose-based
 
@@ -78,11 +69,17 @@ AirWebView(
     },
     onError = {
         // Handle error scenario
+    },
+    setCustomWebView = {
+        // optional
+        // provide a WebView with your configurations (remember to handle progress changes and errors. refer to this library's way of handling them for reference)
+    },
+    setCustomPdfView = {
+        // optional
+        // provide a PDFView with your configurations (remember to handle progress changes and errors. refer to this library's way of handling them for reference)
     }
 )
 ```
-
----
 
 ### View-based
 
@@ -98,7 +95,6 @@ layout xml:
 fragment:
 
 ```kotlin
-// Show progress here
 airWebView.load(
     context,
     viewModelScope,
@@ -108,11 +104,17 @@ airWebView.load(
     },
     onError = {
         // Handle error scenario
+    },
+    setCustomWebView = {
+        // optional
+        // provide a WebView with your configurations (remember to handle progress changes and errors. refer to this library's way of handling them for reference)
+    },
+    setCustomPdfView = {
+        // optional
+        // provide a PDFView with your configurations (remember to handle progress changes and errors. refer to this library's way of handling them for reference)
     }
 )
 ```
-
-___
 
 ## Motivation
 
@@ -188,5 +190,13 @@ Challenges in rendering/ loading PDFs with other solutions:
     - you cannot open PDF directly using URL. You must download the PDF first, then supply the lib
       that. This requires additional efforts by the developer.
     - no active development in this library
+ 
 
-___
+
+## Shoutout
+
+Huge thanks to [AndroidPdfViewer](https://github.com/DImuthuUpe/AndroidPdfViewer) library for making it super easy to render PDFs.
+
+
+
+
